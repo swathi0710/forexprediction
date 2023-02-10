@@ -43,6 +43,6 @@ weekly = A_B.resample('W', label='left',closed = 'left').mean()
 
 weekly["close"]=weekly["close"].ffill()
 
-st.write("Visualisation of the target value over the years")
-st.line_chart(weekly)
+st.write(f"Visualization of the {cur_A}/{cur_B} close prices over the years")
+st.linechart(weekly["close"])
      
