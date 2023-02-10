@@ -1,13 +1,21 @@
 import streamlit as st
-
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-from statsmodels.tsa.stattools import adfuller
-from statsmodels.tsa.seasonal import seasonal_decompose
-from statsmodels.tsa.arima_model import ARIMA
-from pmdarima.arima import auto_arima
-from sklearn.metrics import mean_squared_error, mean_absolute_error
-import math
 
-print("all good!")
+
+url='https://drive.google.com/file/d/18-4rLXTR2B-KVsGTMkngcYQUwhnM0Rod/view?usp=sharing'
+url='https://drive.google.com/uc?id=' + url.split('/')[-2]
+data = pd.read_csv(url)
+
+st.title('Forex Exchange Rate Dashboard')
+
+data["A"]=[str(a).split("/")[0] for a in data["slug"]]
+data["B"]=[str(a).split("/")[1] for a in data["slug"]]
+
+A_options=data["A"].unique()
+
+
+option = st.selectbox(
+     'Select the first currency',
+     A_options)
+     
