@@ -35,6 +35,8 @@ for b in A_data["B"].unique():
 cur_map={x:y for y,x in zip(Alist,A_data["B"].unique())}
 
 A_B=cur_map[cur_B]
+A_B=A_B.set_index(A_B.date)
+A_B.index=pd.to_datetime(A_B.date)
 
 #upsample to weekly records using mean
 weekly = A_B.resample('W', label='left',closed = 'left').mean()
