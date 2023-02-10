@@ -1,13 +1,13 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-
+import seaborn as sns
 
 url='https://drive.google.com/file/d/18-4rLXTR2B-KVsGTMkngcYQUwhnM0Rod/view?usp=sharing'
 url='https://drive.google.com/uc?id=' + url.split('/')[-2]
 data = pd.read_csv(url)
 
-st.title('Forex Exchange Rate Dashboard')
+st.title('Forex rate prediction Dashboard')
 
 data["A"]=[str(a).split("/")[0] for a in data["slug"]]
 data["B"]=[str(a).split("/")[1] for a in data["slug"]]
@@ -45,4 +45,7 @@ weekly["close"]=weekly["close"].ffill()
 
 st.write(f"Visualization of the {cur_A}/{cur_B} close prices over the years")
 st.line_chart(weekly["close"])
-     
+
+st.write(f"The KDE plot below gives an idea about shape, spread, modes and ouliers in the data")
+st.write(sns.FacetGrid(weekly, hue=close, palette="husl", height=6).map(sns.kdeplot, close).add_legend())
+st.pyplot()
