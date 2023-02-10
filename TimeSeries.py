@@ -48,4 +48,3 @@ st.line_chart(weekly["close"])
 
 st.write(f"The KDE plot below gives an idea about shape, spread, modes and ouliers in the data")
 st.write(sns.FacetGrid(weekly, palette="husl", height=6).map(sns.kdeplot, "close").add_legend())
-st.pyplot()
