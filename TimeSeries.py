@@ -58,7 +58,7 @@ def test_stationarity(timeseries):
     
     datf=pd.DataFrame({"y1":timeseries,"y2":rolmean,"y3":rolstd,"x":timeseries.index})
     
-    st.line_chart(datf[[['x', 'y1', 'y2','y3']]
+    st.line_chart(datf[['x', 'y1', 'y2','y3']])
     st.write("Results of dickey fuller test")
     adft = adfuller(timeseries,autolag='AIC')
     # output for dft will give us without defining what the values are.
