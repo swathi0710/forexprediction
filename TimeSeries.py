@@ -48,7 +48,17 @@ st.write(f"Visualization of the {cur_A}/{cur_B} close prices over the years")
 st.line_chart(weekly["close"])
 
 
-from pandas.plotting import autocorrelation_plot
 df_close = weekly['close']
 autocorrelation_plot(df_close)
-plt.show()
+def plot_autocorrelation(data, lags=30):
+    fig, ax = plt.subplots(figsize=(10, 5))
+    autocorrelation = np.corrcoef(data[:-lags], data[lags:])[0,1]
+    ax.acorr(data, maxlags=lags, lw=2)
+    ax.set_xlim([0, lags])
+    st.pyplot()
+
+lags = st.slider("Number of lags", min_value=1, max_value=100, value=30, step=1)
+plot_autocorrelation(df_close, lags)
+
+
+
