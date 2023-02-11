@@ -57,7 +57,7 @@ def test_stationarity(timeseries,cur_A,cur_B):
     rolstd = timeseries.rolling(52).std()
     
     chart=pd.DataFrame(timeseries,rolmean,rolstd)
-    chart.index=df_close.index
+    #chart.index=df_close.index
     st.line_chart(chart)
     st.write("Results of dickey fuller test")
     adft = adfuller(timeseries,autolag='AIC')
