@@ -1,7 +1,2 @@
-pystan
 seaborn
 matplotlib
-numpy
-patsy
-pmdarima
-fbprophet
