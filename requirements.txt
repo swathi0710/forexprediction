@@ -1,4 +1,4 @@
-pystan~=2.14
+pystan
 seaborn
 matplotlib
 numpy
