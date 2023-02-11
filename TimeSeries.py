@@ -52,7 +52,7 @@ st.line_chart(weekly["close"])
 
 df_close = weekly['close']
 
-def test_stationarity(timeseries):
+def test_stationarity(timeseries,cur_A,cur_B):
     rolmean = timeseries.rolling(52).mean()
     rolstd = timeseries.rolling(52).std()
     
