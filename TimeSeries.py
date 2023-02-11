@@ -49,7 +49,6 @@ st.line_chart(weekly["close"])
 
 
 df_close = weekly['close']
-autocorrelation_plot(df_close)
 def plot_autocorrelation(data, lags=30):
     fig, ax = plt.subplots(figsize=(10, 5))
     autocorrelation = np.corrcoef(data[:-lags], data[lags:])[0,1]
