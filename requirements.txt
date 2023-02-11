@@ -1,5 +1,6 @@
 seaborn
 matplotlib
+numpy
 patsy
 pmdarima
 pystan~=2.14
