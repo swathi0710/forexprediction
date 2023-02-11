@@ -1,7 +1,7 @@
+pystan~=2.14
 seaborn
 matplotlib
 numpy
 patsy
 pmdarima
-pystan~=2.14
 fbprophet
