@@ -67,6 +67,8 @@ def test_stationarity(timeseries):
     for key,values in adft[4].items():
         output['critical value (%s)'%key] =  values
     st.write(output)
+    stat=["stationary","non-stationary"][int(output["p-value"]>0.05)]
+    st.write(f"The ADF test shows that the time series for {cur_A}/{cur_B} close value is {stat}")
 test_stationarity(df_close)
 
 
