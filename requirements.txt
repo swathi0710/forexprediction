@@ -1,1 +1,6 @@
 seaborn
+matplotlib
+patsy
+pmdarima
+pystan~=2.14
+fbprophet
