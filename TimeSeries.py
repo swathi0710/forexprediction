@@ -48,3 +48,7 @@ st.write(f"Visualization of the {cur_A}/{cur_B} close prices over the years")
 st.line_chart(weekly["close"])
 
 
+from pandas.plotting import autocorrelation_plot
+df_close = weekly['close']
+autocorrelation_plot(df_close)
+plt.show()
