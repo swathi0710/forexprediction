@@ -97,6 +97,9 @@ model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
 
 p,q,d = model_autoARIMA.order
 
+st.write(f"The optimal p, q, d values chosen by auto arima are {p}, {q} and {d}")
+
+
 from statsmodels.tsa.arima.model import ARIMA
 model = ARIMA(train_data, order=(p,q,d))  
 fitted = model.fit()  
@@ -106,9 +109,9 @@ fc=fitted.forecast(samples, alpha=0.05)
 fc_series = pd.Series(fc, index=test_data.index)
 
 
-chart=pd.DataFrame(test_data)
+chart=pd.DataFrame(np.exp(test_data))
 
-chart["fc_series"]=fc_series
+chart["fc_series"]=np.exp(fc_series)
 
 st.line_chart(chart)
 
