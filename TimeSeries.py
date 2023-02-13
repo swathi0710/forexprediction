@@ -98,7 +98,7 @@ model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
 
 p,q,d = model_autoARIMA.order
 
-st.write(f"The optimal p, q, d values chosen by auto arima are {p}, {q} and {d}")
+st.write(f"The optimal p, q, d values chosen by auto arima are {p}, {q} and {d}.")
 
 
 from statsmodels.tsa.arima.model import ARIMA
@@ -109,12 +109,12 @@ fc=fitted.forecast(samples, alpha=0.05)
 
 fc_series = pd.Series(fc, index=test_data.index)
 
-st.write(f"The performance of Arima model of order ({p},{q},{d} is visualised in the below plot:")
+st.write(f"The performance of Arima model of order ({p},{q},{d}) is visualised in the below plot:")
+
+
 chart=pd.DataFrame(np.exp(test_data))
 
 chart["Predicted Close values"]=np.exp(fc_series)
-
-st.write(f"The performance of Arima model of order ({p},{q},{d} is visualised in the below plot:")
 
 st.line_chart(chart)
 
