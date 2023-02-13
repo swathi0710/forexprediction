@@ -108,11 +108,26 @@ fc=fitted.forecast(samples, alpha=0.05)
 
 fc_series = pd.Series(fc, index=test_data.index)
 
-
+st.write(f"The performance of Arima model of order ({p},{q},{d} is visualised in the below plot:")
 chart=pd.DataFrame(np.exp(test_data))
 
-chart["fc_series"]=np.exp(fc_series)
+chart["Predicted Close values"]=np.exp(fc_series)
+
+st.write(f"The performance of Arima model of order ({p},{q},{d} is visualised in the below plot:")
 
 st.line_chart(chart)
+
+
+st.write("Error Metrics:")
+mse = mean_squared_error(test_data, fc)
+st.write('MSE: '+str(mse))
+mae = mean_absolute_error(test_data, fc)
+st.write('MAE: '+str(mae))
+rmse = math.sqrt(mean_squared_error(test_data, fc))
+st.write('RMSE: '+str(rmse))
+mape = np.mean(np.abs(fc - test_data)/np.abs(test_data))
+st.write('MAPE: '+str(mape))
+
+
 
 
