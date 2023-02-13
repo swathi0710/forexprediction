@@ -2,3 +2,5 @@ seaborn
 pmdarima
 statsmodels
 scikit-learn
+pystan~=2.14
+fbprophet
