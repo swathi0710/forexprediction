@@ -148,4 +148,13 @@ chart1["Predicted Close values"]=np.exp(fs)
 st.write("The performance of FB Prophet on the same data is shown below:")
 st.line_chart(chart)
 
+mse = mean_squared_error(test_data, fs)
+st.write('MSE: '+str(mse))
+mae = mean_absolute_error(test_data, fs)
+st.write('MAE: '+str(mae))
+rmse = math.sqrt(mean_squared_error(test_data, fs))
+st.write('RMSE: '+str(rmse))
+mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
+st.write('MAPE: '+str(mape))
+
 
