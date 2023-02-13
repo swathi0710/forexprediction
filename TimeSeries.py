@@ -97,6 +97,9 @@ model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
 
 p,q,d = model_autoARIMA.order
 
+from statsmodels.tsa.arima.model import ARIMA
+model = ARIMA(train_data, order=(p,q,d))  
+fitted = model.fit()  
 samples=len(test_data)
 fc=fitted.forecast(samples, alpha=0.05)
 
