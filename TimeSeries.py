@@ -145,7 +145,7 @@ chart1=pd.DataFrame(np.exp(test_data))
 fs=pd.Series(forecast["yhat"])
 chart1["Predicted Close values"]=np.exp(fs)
 
-The performance of FB Prophet on the same data is shown below:
+st.write("The performance of FB Prophet on the same data is shown below:")
 st.line_chart(chart)
 
 
