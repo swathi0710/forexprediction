@@ -129,6 +129,23 @@ st.write('RMSE: '+str(rmse))
 mape = np.mean(np.abs(fc - test_data)/np.abs(test_data))
 st.write('MAPE: '+str(mape))
 
+from prophet import Prophet
 
+train_df=pd.DataFrame(train_data)
+train_df["ds"]=train_df.index
+train_df["y"]=train_df["close"]
+
+model = Prophet(seasonality_mode='multiplicative', yearly_seasonality=False, weekly_seasonality=True)
+model.fit(train_df)
+
+future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
+forecast = model.predict(future)
+
+chart1=pd.DataFrame(np.exp(test_data))
+fs=pd.Series(forecast["yhat"])
+chart1["Predicted Close values"]=np.exp(fs)
+
+The performance of FB Prophet on the same data is shown below:
+st.line_chart(chart)
 
 
