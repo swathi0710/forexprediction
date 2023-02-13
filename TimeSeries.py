@@ -155,6 +155,6 @@ st.write('MAE: '+str(mae))
 rmse = math.sqrt(mean_squared_error(test_data, fs))
 st.write('RMSE: '+str(rmse))
 mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
-st.write('MAPE: '+str(mape))
+st.write(mape)
 
 
