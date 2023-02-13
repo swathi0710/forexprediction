@@ -106,6 +106,9 @@ fc=fitted.forecast(samples, alpha=0.05)
 fc_series = pd.Series(fc, index=test_data.index)
 
 
+chart=pd.DataFrame(train_data)
+chart["test_data"]=test_data
+chart["fc_series"]=fc_series
 
 st.line_chart(train_data)
 
