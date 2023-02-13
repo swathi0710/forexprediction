@@ -69,6 +69,38 @@ def test_stationarity(timeseries,cur_A,cur_B):
     st.write(output)
     stat=["stationary","non-stationary"][int(output["p-value"]>0.05)]
     st.write(f"The ADF test shows that the time series for {cur_A}/{cur_B} close value is {stat}")
+
 test_stationarity(df_close,cur_A,cur_B)
+
+#stationarising:
+df_log = np.log(df_close)
+
+#Split test and train data
+train_data, test_data = df_log[3:int(len(df_log)*0.9)], df_log[int(len(df_log)*0.9):]
+
+#auto-tune using auto arima:
+model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
+                      test='adf',       # use adftest to find optimal 'd'
+                      max_p=3, max_q=3, # maximum p and q
+                      m=1,              # frequency of series
+                      d=None,           # let model determine 'd'
+                      seasonal=False,   # No Seasonality
+                      start_P=0, 
+                      D=0, 
+                      trace=True,
+                      error_action='ignore',  
+                      suppress_warnings=True, 
+                      stepwise=True)
+
+p,q,d = model_autoARIMA.order
+
+samples=len(test_data)
+fc=fitted.forecast(samples, alpha=0.05)
+
+fc_series = pd.Series(fc, index=test_data.index)
+
+chart_data=pd.DataFrame(train_data,test_data,fc_series)
+
+st.line_chart(chart_data)
 
 
