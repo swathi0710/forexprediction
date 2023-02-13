@@ -3,4 +3,4 @@ pmdarima
 statsmodels
 scikit-learn
 pystan
-fbprophet
+prophet
