@@ -8,6 +8,7 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 from statsmodels.tsa.arima_model import ARIMA
 from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
+import plotly.express as px
 import math
 
 url='https://drive.google.com/file/d/18-4rLXTR2B-KVsGTMkngcYQUwhnM0Rod/view?usp=sharing'
@@ -141,9 +142,19 @@ model.fit(train_df)
 future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
 forecast = model.predict(future)
 
-chart1=pd.DataFrame(np.exp(test_data))
+
 fs=pd.Series(forecast["yhat"])
-chart1["Predicted Close values"]=np.exp(fs)
+fig = px.line(x=train_data.index, y=np.exp(train_data), 
+              line=dict(width=2, color='orange'),
+              name='training data')
+fig.add_scatter(x=test_data.index, y=np.exp(test_data),
+                line=dict(width=2, color='blue'),
+                name='Actual Forex rates')
+fig.add_scatter(x=fs.index, y=np.exp(fs),
+                line=dict(width=2, color='red'),
+                name='Predicted Forex rates')
+st.write(fig)
+
 
 st.write("The performance of FB Prophet on the same data is shown below:")
 st.line_chart(chart)
@@ -154,6 +165,7 @@ mae = mean_absolute_error(test_data, fs)
 st.write('MAE: '+str(mae))
 rmse = math.sqrt(mean_squared_error(test_data, fs))
 st.write('RMSE: '+str(rmse))
+
 
 mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
 st.write("MAPE: " +str(mape))
