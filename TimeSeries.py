@@ -110,6 +110,6 @@ chart=pd.DataFrame(train_data)
 chart["test_data"]=test_data
 chart["fc_series"]=fc_series
 
-st.line_chart(train_data)
+st.line_chart(chart)
 
 
