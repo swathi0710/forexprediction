@@ -186,6 +186,6 @@ start_date=weekly.iloc[0].date
 sample_date = start_date + (((user_input - start_date) // timedelta(weeks=1)) * timedelta(weeks=1))
 sample_date=pd.DatetimeIndex([sample_date]).normalize()
 day_calc=sample_date[0]
-st.write(f"{ts1[day_calc]})
+st.write(f"{ts1[day_calc]}")
 
 
