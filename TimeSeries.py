@@ -145,16 +145,7 @@ forecast = model.predict(future)
 
 
 fs=pd.Series(forecast["yhat"])
-fig = px.line(x=train_data.index, y=np.exp(train_data), 
-              line=dict(width=2, color='orange'),
-              name='training data')
-fig.add_scatter(x=test_data.index, y=np.exp(test_data),
-                line=dict(width=2, color='blue'),
-                name='Actual Forex rates')
-fig.add_scatter(x=fs.index, y=np.exp(fs),
-                line=dict(width=2, color='red'),
-                name='Predicted Forex rates')
-st.write(fig)
+
 
 
 st.write("The performance of FB Prophet on the same data is shown below:")
