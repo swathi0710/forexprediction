@@ -10,6 +10,7 @@ from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import plotly.express as px
 import math
+from datetime import datetime, timedelta
 
 url='https://drive.google.com/file/d/18-4rLXTR2B-KVsGTMkngcYQUwhnM0Rod/view?usp=sharing'
 url='https://drive.google.com/uc?id=' + url.split('/')[-2]
@@ -169,5 +170,22 @@ st.write('RMSE: '+str(rmse))
 
 mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
 st.write("MAPE: " +str(mape))
+
+st.write("Finding the foreign exchange close value for a specific date:")
+
+from datetime import datetime, timedelta
+
+ts1=pd.Series(train_df["y"])
+forecast2=forecast2.set_index(forecast2.ds)
+ts2=pd.Series(forecast2["yhat"])
+ts1=ts1.append(ts2)
+ts1=np.exp(ts1)
+user_input=st.date_input("Choose a date", value=None)
+w=weekly.index.to_pydatetime()
+start_date=weekly.iloc[0].date
+sample_date = start_date + (((user_input - start_date) // timedelta(weeks=1)) * timedelta(weeks=1))
+sample_date=pd.DatetimeIndex([sample_date]).normalize()
+day_calc=sample_date[0]
+st.write(f"{ts1[day_calc]})
 
 
