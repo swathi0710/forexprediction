@@ -166,6 +166,10 @@ st.write("Finding the foreign exchange close value for a specific date:")
 
 from datetime import datetime, timedelta
 
+future2=model.make_future_dataframe(periods=1000, freq='W-SUN',include_history=False)
+forecast2= model.predict(future2)
+
+
 ts1=pd.Series(train_df["y"])
 forecast2=forecast2.set_index(forecast2.ds)
 ts2=pd.Series(forecast2["yhat"])
