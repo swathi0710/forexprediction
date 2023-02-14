@@ -162,7 +162,7 @@ st.write('RMSE: '+str(rmse))
 mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
 st.write("MAPE: " +str(mape))
 
-st.write("Finding the foreign exchange close value for a specific date:")
+st.write(f"Check the predicted {cur_A}/{cur_B} exchange rate for a specific date:")
 
 from datetime import datetime, timedelta
 
@@ -176,14 +176,20 @@ ts2=pd.Series(forecast2["yhat"])
 ts1=ts1.append(ts2)
 ts1=np.exp(ts1)
 user_input=st.date_input("Choose a date", value=None)
-st.write(type(user_input))
+#st.write(type(user_input))
 w=weekly.index.to_pydatetime()
 start_date=train_df.iloc[0]["ds"]
 start_date=start_date.date()
-st.write(type(start_date))
+#st.write(type(start_date))
 sample_date = start_date + (((user_input - start_date) // timedelta(weeks=1)) * timedelta(weeks=1))
 sample_date=pd.DatetimeIndex([sample_date]).normalize()
 day_calc=sample_date[0]
-st.write(f"{ts1[day_calc]}")
+l=ts1[day_calc]
+st.write(f"Predicted Exchange Rate: {l}")
+st.write(f"Enter the amount in {cur_A}")
+A = st.number_input("Enter amt in {cur_A}:")
+B = A*l
+st.write(f"The estimated value in {cur_B} is {B} on {sample_date}")
+
 
 
