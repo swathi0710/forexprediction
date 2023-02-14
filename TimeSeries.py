@@ -177,7 +177,7 @@ ts1=ts1.append(ts2)
 ts1=np.exp(ts1)
 user_input=st.date_input("Choose a date", value=None)
 w=weekly.index.to_pydatetime()
-start_date=weekly.iloc[0].date
+start_date=train_df.iloc[0]["ds"]
 sample_date = start_date + (((user_input - start_date) // timedelta(weeks=1)) * timedelta(weeks=1))
 sample_date=pd.DatetimeIndex([sample_date]).normalize()
 day_calc=sample_date[0]
