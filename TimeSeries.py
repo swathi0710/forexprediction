@@ -108,7 +108,7 @@ model = ARIMA(train_data, order=(p,q,d))
 fitted = model.fit()  
 samples=len(test_data)
 fc=fitted.forecast(samples, alpha=0.05)
-
+fc2=fitted.forecast(500, alpha=0.05)
 fc_series = pd.Series(fc, index=test_data.index)
 
 st.write(f"The performance of Arima model of order ({p},{q},{d}) is visualised in the below plot:")
@@ -128,8 +128,8 @@ mae = mean_absolute_error(test_data, fc)
 st.write('MAE: '+str(mae))
 rmse = math.sqrt(mean_squared_error(test_data, fc))
 st.write('RMSE: '+str(rmse))
-mape = np.mean(np.abs(fc - test_data)/np.abs(test_data))
-st.write('MAPE: '+str(mape))
+mape1 = np.mean(np.abs(fc - test_data)/np.abs(test_data))
+st.write('MAPE: '+str(mape1))
 
 from prophet import Prophet
 
@@ -137,7 +137,7 @@ train_df=pd.DataFrame(train_data)
 train_df["ds"]=train_df.index
 train_df["y"]=train_df["close"]
 
-model = Prophet(seasonality_mode='multiplicative', yearly_seasonality=False, weekly_seasonality=True)
+model = Prophet(seasonality_mode='additive', yearly_seasonality=False, weekly_seasonality=True, daily_seasonality=True )
 model.fit(train_df)
 
 future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
@@ -166,12 +166,18 @@ st.write(f"Check the predicted {cur_A}/{cur_B} exchange rate for a specific date
 
 from datetime import datetime, timedelta
 
-future2=model.make_future_dataframe(periods=1000, freq='W-SUN',include_history=False)
+future2=model.make_future_dataframe(periods=500, freq='W-SUN',include_history=False)
 forecast2= model.predict(future2)
 
 
 ts1=pd.Series(train_df["y"])
-forecast2=forecast2.set_index(forecast2.ds)
+
+if mape1>mape:
+     forecast2= model.predict(future2)
+     forecast2=forecast2.set_index(forecast2.ds)
+else:
+     forecast2=fc2
+     
 ts2=pd.Series(forecast2["yhat"])
 ts1=ts1.append(ts2)
 ts1=np.exp(ts1)
