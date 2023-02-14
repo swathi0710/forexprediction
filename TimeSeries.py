@@ -179,6 +179,7 @@ user_input=st.date_input("Choose a date", value=None)
 st.write(type(user_input))
 w=weekly.index.to_pydatetime()
 start_date=train_df.iloc[0]["ds"]
+start_date=start_date.date()
 st.write(type(start_date))
 sample_date = start_date + (((user_input - start_date) // timedelta(weeks=1)) * timedelta(weeks=1))
 sample_date=pd.DatetimeIndex([sample_date]).normalize()
