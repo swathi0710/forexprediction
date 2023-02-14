@@ -196,10 +196,9 @@ sample_date=pd.DatetimeIndex([sample_date]).normalize()
 day_calc=sample_date[0]
 l=ts1[day_calc]
 st.write(f"Predicted Exchange Rate: {l}")
-st.write(f"Enter the amount in {cur_A}")
-A = st.number_input()
+A = st.number_input(f"Enter the amount in {cur_A}")
 B = A*l
-st.write(f"The estimated value in {cur_B} is {B} on {sample_date.strftime('%B %d, %Y')}")
+st.write(f"The estimated value of {A }{cur_A}  is {B} {cur_B} on {sample_date.strftime('%B %d, %Y')}")
 
 
 
