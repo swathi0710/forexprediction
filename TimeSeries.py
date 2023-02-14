@@ -162,7 +162,7 @@ st.write('RMSE: '+str(rmse))
 mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
 st.write("MAPE: " +str(mape))
 
-st.write(f"Check the predicted {cur_A}/{cur_B} exchange rate for a specific date:")
+
 
 from datetime import datetime, timedelta
 
@@ -184,6 +184,7 @@ else:
      ts2=fc2     
 ts1=ts1.append(ts2)
 ts1=np.exp(ts1)
+st.write(f"Check the predicted {cur_A}/{cur_B} exchange rate for a specific date:")
 user_input=st.date_input("Choose a date", value=None)
 #st.write(type(user_input))
 w=weekly.index.to_pydatetime()
@@ -196,9 +197,9 @@ day_calc=sample_date[0]
 l=ts1[day_calc]
 st.write(f"Predicted Exchange Rate: {l}")
 st.write(f"Enter the amount in {cur_A}")
-A = st.number_input("Enter amt in {cur_A}:")
+A = st.number_input()
 B = A*l
-st.write(f"The estimated value in {cur_B} is {B} on {sample_date}")
+st.write(f"The estimated value in {cur_B} is {B} on {sample_date.strftime('%B %d, %Y')}")
 
 
 
