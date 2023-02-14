@@ -172,13 +172,13 @@ forecast2= model.predict(future2)
 
 ts1=pd.Series(train_df["y"])
 
+
+forecast2= model.predict(future2)
+forecast2=forecast2.set_index(forecast2.ds)
 if mape1>mape:
-     forecast2= model.predict(future2)
-     forecast2=forecast2.set_index(forecast2.ds)
+     ts2=fc2
 else:
-     forecast2=fc2
-     
-ts2=pd.Series(forecast2["yhat"])
+     ts2=pd.Series(forecast2["yhat"])
 ts1=ts1.append(ts2)
 ts1=np.exp(ts1)
 user_input=st.date_input("Choose a date", value=None)
