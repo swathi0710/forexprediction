@@ -176,9 +176,12 @@ ts1=pd.Series(train_df["y"])
 forecast2= model.predict(future2)
 forecast2=forecast2.set_index(forecast2.ds)
 if mape1>mape:
-     ts2=fc2
-else:
+     st.write("The FB Prophet model performs better on an average.")
      ts2=pd.Series(forecast2["yhat"])
+     
+else:
+     st.write("The ARIMA model performs better on an average.")
+     ts2=fc2     
 ts1=ts1.append(ts2)
 ts1=np.exp(ts1)
 user_input=st.date_input("Choose a date", value=None)
