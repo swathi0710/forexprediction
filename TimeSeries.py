@@ -33,9 +33,9 @@ with col1:
     <font size="4"> **Select Currency Pairs** </font>\n
     """, unsafe_allow_html=True)
     A_options, data=gen()
+    cur_A = st.selectbox('Select first currency', A_options)
     A_data=data[data["A"]==cur_A]
     B_options = A_data["B"].unique()
-    cur_A = st.selectbox('Select first currency', A_options)
     cur_B = st.selectbox('Select second currency', B_options)
     
     
