@@ -146,16 +146,6 @@ ts1=pd.Series(train_df["y"])
 
 forecast2= model.predict(future2)
 forecast2=forecast2.set_index(forecast2.ds)
-if mape1>mape:
-     st.write("The FB Prophet model performs better on an average.")
-     ts2=pd.Series(forecast2["yhat"])
-
-else:
-     st.write("The ARIMA model performs better on an average.")
-     ts2=fc2
-ts1=ts1.append(ts2)
-ts1=np.exp(ts1)
-
 
 with col2:
     st.markdown("""
@@ -183,7 +173,7 @@ with col2:
         x=train_data.index, y=np.exp(train_data.values),
         name="Training Data"       # this sets its legend entry
     ))
-
+    
     fig2.add_trace(go.Scatter(
         x=test_data.index, y=np.exp(test_data.values),
         name="Testing Data"
@@ -214,6 +204,15 @@ with col2:
     )
 
     st.plotly_chart(fig2, use_container_width=True)
+    if mape1>mape:
+         st.write("The FB Prophet model performs better on an average.")
+         ts2=pd.Series(forecast2["yhat"])
+
+    else:
+         st.write("The ARIMA model performs better on an average.")
+         ts2=fc2
+    ts1=ts1.append(ts2)
+    ts1=np.exp(ts1)    
     
     st.markdown("""
     \b\n
