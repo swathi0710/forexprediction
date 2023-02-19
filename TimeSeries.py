@@ -1,6 +1,6 @@
 import streamlit as st
 st. set_page_config(layout="wide")
-col1, col2 = st.columns([1, 4], gap = 'large')
+col1, col2 = st.columns([1, 4], gap = 'medium')
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -125,12 +125,12 @@ with col2:
     fs=pd.Series(forecast["yhat"])
     fs.index=forecast.ds
     chart["Predicted Close values Prophet"]=np.exp(fs)
-    test_data = np.where(test_data == 0, 1e-8, test_data)
+    test_data_ = np.where(test_data == 0, 1e-8, test_data)
 
-    mse_prophet = mean_squared_error(test_data, fs)
-    mae_prophet = mean_absolute_error(test_data, fs)
-    rmse_prophet = math.sqrt(mean_squared_error(test_data, fs))
-    mape = np.mean(np.abs(fs - test_data)/np.abs(test_data))
+    mse_prophet = mean_squared_error(test_data_, fs)
+    mae_prophet = mean_absolute_error(test_data_, fs)
+    rmse_prophet = math.sqrt(mean_squared_error(test_data_, fs))
+    mape = np.mean(np.abs(fs - test_data_)/np.abs(test_data_))
 
     data = {
         "PROPHET":[mse_prophet, mae_prophet, rmse_prophet, mape],
@@ -167,7 +167,7 @@ with col2:
     # visualization
     fig2 = go.Figure()
     fig2.add_trace(go.Scatter(x=train_data.index, y=np.exp(train_data.values), name="Training Data"))
-    fig2.add_trace(go.Scatter(x=chart.index, y=np.exp(chart['test_data'].values), name="Testing Data"))
+    fig2.add_trace(go.Scatter(x=test_data.index, y=np.exp(test_data.values), name="Testing Data"))
     fig2.add_trace(go.Scatter(y=chart["Predicted Close values"],x=chart.index, name="ARIMA Forecast"))
 
     fig2.add_trace(go.Scatter(
