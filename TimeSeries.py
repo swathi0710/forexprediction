@@ -248,4 +248,4 @@ with col2:
     st.write(f"Predicted Exchange Rate: {l}")
     A = st.number_input(f"Enter the amount in {cur_A}")
     B = A*l
-    st.write(f"The estimated value of {A } {cur_A}  is {B} {cur_B} on {sample_date[0].strftime('%B %d, %Y')}")
+    st.write(f"The estimated value of {A } {cur_A}  is {B} {cur_B} on {user_input.strftime('%B %d, %Y')}")
