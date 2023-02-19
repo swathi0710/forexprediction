@@ -164,7 +164,7 @@ with col2:
     fig2.add_trace(go.Scatter(
         x=test_data.index, y=np.exp(test_data.values),
         name="Testing Data"
-    ))2
+    ))
 
     fig2.add_trace(go.Scatter(
         y=chart["Predicted Close values"],
