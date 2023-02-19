@@ -1,6 +1,6 @@
 import streamlit as st
 st. set_page_config(layout="wide")
-col1, col2 = st.columns([1, 4], gap = 'small')
+col1, col2 = st.columns([1, 4], gap = 'large')
 import numpy as np
 import pandas as pd
 import seaborn as sns
