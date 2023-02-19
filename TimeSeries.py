@@ -182,7 +182,13 @@ with col1:
                 name="PROPHET Forecast"
             ))
 
-            fig2.update_layout(
+            fig2.update_layout(legend=dict(
+                orientation="h",
+                entrywidth=70,
+                yanchor="bottom",
+                y=1.02,
+                xanchor="right",
+                x=1),
                 title={
                     'text': "Performance of ARIMA & FB Prophet On The same Test Data",
                     'y':0.9,
@@ -191,7 +197,7 @@ with col1:
                     'yanchor': 'top'},
                 xaxis_title="Date",
                 yaxis_title="Close Price",
-                font=dict(size=12)
+                font=dict(size=14)
             )
 
             st.plotly_chart(fig2, use_container_width=True)
