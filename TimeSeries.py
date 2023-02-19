@@ -161,10 +161,14 @@ with col1:
             fig2 = go.Figure()
 
             fig2.add_trace(go.Scatter(
-                y=weekly["close"], x=weekly.index,
-                name="Actual Close Prices"       # this sets its legend entry
+                x=train_data.index, y=train_data.values,
+                name="Training Data"       # this sets its legend entry
             ))
 
+            fig2.add_trace(go.Scatter(
+                x=test_data.index, y=test_data.values,
+                name="Testing Data"
+            ))
 
             fig2.add_trace(go.Scatter(
                 y=chart["Predicted Close values"],
