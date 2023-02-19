@@ -1,6 +1,6 @@
 import streamlit as st
 st. set_page_config(layout="wide")
-col1, col2 = st.columns([1, 4], gap = 'medium')
+col1, col2 = st.columns([1, 3], gap = 'medium')
 import numpy as np
 import pandas as pd
 import seaborn as sns
@@ -37,8 +37,7 @@ with col1:
     A_data=data[data["A"]==cur_A]
     B_options = A_data["B"].unique()
     cur_B = st.selectbox('Select second currency', B_options)
-       
-with col2:
+    
     Alist=[]
     for b in A_data["B"].unique():
       #print(b,A_data[A_data["B"]==b].shape)
@@ -55,97 +54,99 @@ with col2:
     weekly["close"]=weekly["close"].ffill()
     df_close = weekly['close']
 
-    #@st.experimental_memo
-    def test_stationarity(timeseries,cur_A,cur_B):
-        rolmean = timeseries.rolling(52).mean()
-        rolstd = timeseries.rolling(52).std()
+#@st.experimental_memo
+def test_stationarity(timeseries,cur_A,cur_B):
+    rolmean = timeseries.rolling(52).mean()
+    rolstd = timeseries.rolling(52).std()
 
-        chart=pd.DataFrame(timeseries,rolmean,rolstd)
-        st.markdown("""
-        \b\n
-        <font size="4"> **Results of Dickey-Fuller Test** </font>\n
-        """, unsafe_allow_html=True)
-        adft = adfuller(timeseries,autolag='AIC')
-        # output for dft will give us without defining what the values are.
-        #hence we manually write what values does it explains using a for loop
-        output = pd.Series(adft[0:4],index=['Test Statistics','p-value','No. of lags used','Number of observations used'])
-        for key,values in adft[4].items():
-            output['critical value (%s)'%key] =  values
-        st.write(output)
-        stat=["stationary","non-stationary"][int(output["p-value"]>0.05)]
-        st.write(f"The ADF test shows that the time series for {cur_A}/{cur_B} close value is {stat}")
-
-
-
-    #stationarising:
-    df_log = np.log(df_close)
-    #Split test and train data
-    train_data, test_data = df_log[3:int(len(df_log)*0.9)], df_log[int(len(df_log)*0.9):]
-    #auto-tune using auto arima:
-    model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
-                          test='adf',       # use adftest to find optimal 'd'
-                          max_p=3, max_q=3, # maximum p and q
-                          m=1,              # frequency of series
-                          d=None,           # let model determine 'd'
-                          seasonal=False,   # No Seasonality
-                          start_P=0,
-                          D=0,
-                          trace=True,
-                          error_action='ignore',
-                          suppress_warnings=True,
-                          stepwise=True)
-    p,q,d = model_autoARIMA.order
-
-    model_ = ARIMA(train_data, order=(p,q,d))
-    fitted = model_.fit()
-    samples=len(test_data)
-    fc=fitted.forecast(samples, alpha=0.05)
-    fc2=fitted.forecast(500, alpha=0.05)
-    fc_series = pd.Series(fc, index=test_data.index)
-
-    chart=pd.DataFrame(np.exp(test_data))
-    chart["Predicted Close values"]=np.exp(fc_series)
-
-    mse_arima = mean_squared_error(test_data, fc)
-    mae_arima = mean_absolute_error(test_data, fc)
-    rmse_arima = math.sqrt(mean_squared_error(test_data, fc))
-    mape1 = np.mean(np.abs(fc - test_data)/np.abs(test_data))
-
-    train_df=pd.DataFrame(train_data)
-    train_df["ds"]=train_df.index
-    train_df["y"]=train_df["close"]
-
-    model = Prophet(seasonality_mode='additive', weekly_seasonality=True, daily_seasonality=True )
-    model.fit(train_df)
-
-    future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
-    forecast = model.predict(future)
+    chart=pd.DataFrame(timeseries,rolmean,rolstd)
+    st.markdown("""
+    \b\n
+    <font size="4"> **Results of Dickey-Fuller Test** </font>\n
+    """, unsafe_allow_html=True)
+    adft = adfuller(timeseries,autolag='AIC')
+    # output for dft will give us without defining what the values are.
+    #hence we manually write what values does it explains using a for loop
+    output = pd.Series(adft[0:4],index=['Test Statistics','p-value','No. of lags used','Number of observations used'])
+    for key,values in adft[4].items():
+        output['critical value (%s)'%key] =  values
+    st.write(output)
+    stat=["stationary","non-stationary"][int(output["p-value"]>0.05)]
+    st.write(f"The ADF test shows that the time series for {cur_A}/{cur_B} close value is {stat}")
 
 
-    fs=pd.Series(forecast["yhat"])
-    fs.index=forecast.ds
-    chart["Predicted Close values Prophet"]=np.exp(fs)
-    test_data_ = np.where(test_data == 0, 1e-8, test_data)
 
-    mse_prophet = mean_squared_error(test_data_, fs)
-    mae_prophet = mean_absolute_error(test_data_, fs)
-    rmse_prophet = math.sqrt(mean_squared_error(test_data_, fs))
-    mape = np.mean(np.abs(fs - test_data_)/np.abs(test_data_))
+#stationarising:
+df_log = np.log(df_close)
+#Split test and train data
+train_data, test_data = df_log[3:int(len(df_log)*0.9)], df_log[int(len(df_log)*0.9):]
+#auto-tune using auto arima:
+model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
+                      test='adf',       # use adftest to find optimal 'd'
+                      max_p=3, max_q=3, # maximum p and q
+                      m=1,              # frequency of series
+                      d=None,           # let model determine 'd'
+                      seasonal=False,   # No Seasonality
+                      start_P=0,
+                      D=0,
+                      trace=True,
+                      error_action='ignore',
+                      suppress_warnings=True,
+                      stepwise=True)
+p,q,d = model_autoARIMA.order
 
-    data = {
-        "PROPHET":[mse_prophet, mae_prophet, rmse_prophet, mape],
-        "ARIMA":[mse_arima, mae_arima, rmse_arima, mape1]
-    }
-    index = ['MSE', 'MAE', 'RMSE', 'MAPE']
-    eval=pd.DataFrame(data=data, index=index)
+model_ = ARIMA(train_data, order=(p,q,d))
+fitted = model_.fit()
+samples=len(test_data)
+fc=fitted.forecast(samples, alpha=0.05)
+fc2=fitted.forecast(500, alpha=0.05)
+fc_series = pd.Series(fc, index=test_data.index)
 
-    future2=model.make_future_dataframe(periods=500, freq='W-SUN',include_history=False)
-    forecast2= model.predict(future2)
-    ts1=pd.Series(train_df["y"])
+chart=pd.DataFrame(np.exp(test_data))
+chart["Predicted Close values"]=np.exp(fc_series)
+
+mse_arima = mean_squared_error(test_data, fc)
+mae_arima = mean_absolute_error(test_data, fc)
+rmse_arima = math.sqrt(mean_squared_error(test_data, fc))
+mape1 = np.mean(np.abs(fc - test_data)/np.abs(test_data))
+
+train_df=pd.DataFrame(train_data)
+train_df["ds"]=train_df.index
+train_df["y"]=train_df["close"]
+
+model = Prophet(seasonality_mode='additive', weekly_seasonality=True, daily_seasonality=True )
+model.fit(train_df)
+
+future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
+forecast = model.predict(future)
 
 
-    forecast2= model.predict(future2)
-    forecast2=forecast2.set_index(forecast2.ds)
+fs=pd.Series(forecast["yhat"])
+fs.index=forecast.ds
+chart["Predicted Close values Prophet"]=np.exp(fs)
+test_data_ = np.where(test_data == 0, 1e-8, test_data)
+
+mse_prophet = mean_squared_error(test_data_, fs)
+mae_prophet = mean_absolute_error(test_data_, fs)
+rmse_prophet = math.sqrt(mean_squared_error(test_data_, fs))
+mape = np.mean(np.abs(fs - test_data_)/np.abs(test_data_))
+
+data = {
+    "PROPHET":[mse_prophet, mae_prophet, rmse_prophet, mape],
+    "ARIMA":[mse_arima, mae_arima, rmse_arima, mape1]
+}
+index = ['MSE', 'MAE', 'RMSE', 'MAPE']
+eval=pd.DataFrame(data=data, index=index)
+
+future2=model.make_future_dataframe(periods=500, freq='W-SUN',include_history=False)
+forecast2= model.predict(future2)
+ts1=pd.Series(train_df["y"])
+
+forecast2= model.predict(future2)
+forecast2=forecast2.set_index(forecast2.ds)
+       
+with col2:
+
     st.markdown("""
     <center>
         <font size="7">
