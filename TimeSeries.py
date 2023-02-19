@@ -141,7 +141,7 @@ with col2:
     train_df["ds"]=train_df.index
     train_df["y"]=train_df["close"]
 
-    model = Prophet(seasonality_mode='additive', yearly_seasonality=False, weekly_seasonality=True, daily_seasonality=True )
+    model = Prophet(seasonality_mode='additive', weekly_seasonality=True, daily_seasonality=True )
     model.fit(train_df)
 
     future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
