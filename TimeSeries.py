@@ -19,12 +19,12 @@ import plotly.offline as po
 
 import main_functions as mfn
 
-#@st.experimental_memo
-
-df = mfn.load_data()
-data = mfn.slug_split(df)
-A_options, B_options = mfn.uniq_cur(data)
-
+@st.experimental_memo
+def gen():
+    df = mfn.load_data()
+    data = mfn.slug_split(df)
+    A_options, B_options = mfn.uniq_cur(data)
+    return A_options, B_options, data
 
 with col1:
     st.markdown("""
@@ -32,7 +32,7 @@ with col1:
     \b\n
     <font size="4"> **Select Currency Pairs** </font>\n
     """, unsafe_allow_html=True)
-   
+    A_options, B_options, data=gen()
     A = st.selectbox('Select first currency', A_options)
     B = st.selectbox('Select second currency', B_options)
     if st.button('Enter'):
