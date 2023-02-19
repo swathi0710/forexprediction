@@ -1,4 +1,4 @@
-import streamlit as st
+Noimport streamlit as st
 st. set_page_config(layout="wide")
 col1, col2 = st.columns([1, 4], gap = 'small')
 import numpy as np
@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 import math
 from datetime import datetime, timedelta
 import plotly.offline as po
-po.init_notebook_mode(connected=True)
+
 import main_functions as mfn
 
 @st.experimental_memo
