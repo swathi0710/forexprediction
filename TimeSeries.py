@@ -76,7 +76,7 @@ with col1:
 
             df_close = weekly['close']
 
-            @st.experimental_memo
+            #@st.experimental_memo
             def test_stationarity(timeseries,cur_A,cur_B):
                 rolmean = timeseries.rolling(52).mean()
                 rolstd = timeseries.rolling(52).std()
