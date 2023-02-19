@@ -161,12 +161,12 @@ with col1:
             fig2 = go.Figure()
 
             fig2.add_trace(go.Scatter(
-                x=train_data.index, y=train_data.values,
+                x=train_data.index, y=np.exp(train_data.values),
                 name="Training Data"       # this sets its legend entry
             ))
 
             fig2.add_trace(go.Scatter(
-                x=test_data.index, y=test_data.values,
+                x=test_data.index, y=np.exp(test_data.values),
                 name="Testing Data"
             ))
 
