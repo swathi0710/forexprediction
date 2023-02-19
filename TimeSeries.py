@@ -145,7 +145,7 @@ with col1:
             train_df["ds"]=train_df.index
             train_df["y"]=train_df["close"]
 
-            model = Prophet(seasonality_mode='additive', daily_seasonality=True, weekly_seasonality=True)
+            model = Prophet(seasonality_mode='additive', yearly_seasonality=False, weekly_seasonality=True, daily_seasonality=True )
             model.fit(train_df)
 
             future = model.make_future_dataframe(periods=len(test_data), freq='W-SUN',include_history=False)
@@ -173,13 +173,13 @@ with col1:
             fig2.add_trace(go.Scatter(
                 y=chart["Predicted Close values"],
                 x=chart.index,
-                name="ARIMA Pridicted Close Prices"
+                name="ARIMA Forecast"
             ))
 
             fig2.add_trace(go.Scatter(
                 y=chart["Predicted Close values Prophet"],
                 x=fs.index,
-                name="Prophet Predicted Close Prices"
+                name="PROPHET Forecast"
             ))
 
             fig2.update_layout(
