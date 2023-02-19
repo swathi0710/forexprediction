@@ -182,13 +182,7 @@ with col1:
                 name="PROPHET Forecast"
             ))
 
-            fig2.update_layout(legend=dict(
-                orientation="h",
-                entrywidth=70,
-                yanchor="bottom",
-                y=1.02,
-                xanchor="right",
-                x=1),
+            fig2.update_layout(
                 title={
                     'text': "Performance of ARIMA & FB Prophet On The same Test Data",
                     'y':0.9,
