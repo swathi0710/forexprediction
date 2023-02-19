@@ -7,7 +7,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from statsmodels.tsa.stattools import adfuller
 from statsmodels.tsa.seasonal import seasonal_decompose
-from statsmodels.tsa.arima_model import ARIMA
+from statsmodels.tsa.arima.model import ARIMA
 from prophet import Prophet
 from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
@@ -96,9 +96,8 @@ model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
                       stepwise=True)
 p,q,d = model_autoARIMA.order
 
-    
-model = ARIMA(train_data, order=(p,q,d))
-fitted = model.fit()
+model_ = ARIMA(train_data, order=(p,q,d))
+fitted = model_.fit()
 samples=len(test_data)
 fc=fitted.forecast(samples, alpha=0.05)
 fc2=fitted.forecast(500, alpha=0.05)
