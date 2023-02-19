@@ -92,7 +92,7 @@ model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
                       trace=True,
                       error_action='ignore',
                       suppress_warnings=True,
-                      stepwise=True)ZMW
+                      stepwise=True)
 
 p,q,d = model_autoARIMA.order
 
