@@ -67,7 +67,7 @@ def test_stationarity(timeseries,cur_A,cur_B):
     adft = adfuller(timeseries,autolag='AIC')
     # output for dft will give us without defining what the values are.
     #hence we manually write what values does it explains using a for loop
-    output = pd.Series(adft[0:4],index=['Test Statistics','p-value','No. of lags used','Number of observations used'])
+    output = pd.Series(adft[0:4],index=['Test Statistics','p-value','Number of lags used','Number of observations used'])
     for key,values in adft[4].items():
         output['critical value (%s)'%key] =  values
     st.write(output)
@@ -222,8 +222,6 @@ with col2:
 with col1:
     test_stationarity(df_close,cur_A,cur_B)
     st.markdown("""
-    \b\n
-    \b\n
     \b\n
     <font size="4"> **Error Metrics of Models** </font>\n
     """, unsafe_allow_html=True)
