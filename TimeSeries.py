@@ -30,7 +30,7 @@ with col1:
     st.markdown("""
     \b\n
     \b\n
-    <font size="4"> **Select Currency Pairs** </font>\n
+    <font size="4"> **Select Currency Pair** </font>\n
     """, unsafe_allow_html=True)
     A_options, data=gen()
     cur_A = st.selectbox('Select first currency', A_options)
@@ -92,7 +92,8 @@ model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
                       trace=True,
                       error_action='ignore',
                       suppress_warnings=True,
-                      stepwise=True)
+                      stepwise=True)ZMW
+
 p,q,d = model_autoARIMA.order
 
 model_ = ARIMA(train_data, order=(p,q,d))
@@ -150,7 +151,7 @@ with col2:
     st.markdown("""
     <center>
         <font size="7">
-            <span style='color:blue'><b>Forex Rate Prediction Dashboard</b></span>
+            <span style='color:blue'><b>CURRENCY EXCHANGE RATE PREDICTION APP</b></span>
         </font>
     </center>
     \b
@@ -222,7 +223,6 @@ with col2:
 with col1:
     test_stationarity(df_close,cur_A,cur_B)
     st.markdown("""
-    \b\n
     <font size="4"> **Error Metrics of Models** </font>\n
     """, unsafe_allow_html=True)
     st.write(eval)
