@@ -167,7 +167,7 @@ with col2:
     # visualization
     fig2 = go.Figure()
     fig2.add_trace(go.Scatter(x=train_data.index, y=np.exp(train_data.values), name="Training Data"))
-    fig2.add_trace(go.Scatter(x=chart.index, y=np.exp(chart['test_data']), name="Testing Data"))
+    fig2.add_trace(go.Scatter(x=chart.index, y=np.exp(chart['test_data'].values), name="Testing Data"))
     fig2.add_trace(go.Scatter(y=chart["Predicted Close values"],x=chart.index, name="ARIMA Forecast"))
 
     fig2.add_trace(go.Scatter(
