@@ -153,7 +153,7 @@ with col2:
     st.markdown("""
     <center>
         <font size="7">
-            <span style='color:#00a5a7'><b>CURRENCY EXCHANGE RATE PREDICTION APP</b></span>
+            <span style='color:#00a5a7'><b>CURRENCY FX RATE PREDICTION WEB-APP</b></span>
         </font>
     </center>
     \b
