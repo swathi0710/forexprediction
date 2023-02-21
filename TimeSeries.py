@@ -27,9 +27,10 @@ def gen():
     return A_options, data
 
 with col1:
+    st.markdown("""<p align="center">
+    <img width="230" height="150" src="https://github.com/TelRich/Currency-Foreign-Exchange-Rates/raw/main/image/2023-02-09-09-35-08.png">
+    </p>""", unsafe_allow_html=True)
     st.markdown("""
-    \b\n
-    \b\n
     <font size="4"> **Select Currency Pair** </font>\n
     """, unsafe_allow_html=True)
     A_options, data=gen()
@@ -156,6 +157,12 @@ with col2:
     </center>
     \b
     """, unsafe_allow_html=True)
+    st.markdown("""
+    ***
+    <font size="4"> A HDSC Fall '22 Capstone Project - Team PyCaret </font>
+    * <font size="4"> [**Dataset**](https://www.kaggle.com/datasets/dhruvildave/currency-exchange-rates) </font>
+    """, unsafe_allow_html=True)
+
     # visualization
     fig = px.line(weekly, y="close", x=weekly.index,
     title=f"Visualization of {cur_A}/{cur_B} Close Prices Over The Years",
