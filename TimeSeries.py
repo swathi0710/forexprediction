@@ -31,7 +31,6 @@ with col1:
     <p align="center">
     <img width="230" height="150" src="https://github.com/TelRich/Currency-Foreign-Exchange-Rates/raw/main/image/2023-02-09-09-35-08.png">
     </p>\n
-    ***
     <font size="4"> **Select Currency Pair** </font>\n
     """, unsafe_allow_html=True)
     A_options, data=gen()
