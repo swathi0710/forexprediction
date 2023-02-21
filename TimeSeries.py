@@ -191,13 +191,22 @@ with col2:
     )
 
     st.plotly_chart(fig2, use_container_width=True)
+    
     if mape1>mape:
-         st.write("The FB Prophet model performs better on an average.")
+         #st.write("The FB Prophet model performs better on an average.")
          ts2=pd.Series(forecast2["yhat"])
 
     else:
-         st.write("The ARIMA model performs better on an average.")
+         #st.write("The ARIMA model performs better on an average.")
          ts2=fc2
+        
+    diff = mape1-mape
+    pct = (diff/mape1)*100
+    if pct < 0:
+        st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} increased by {round(pct, 2)}% ({round(mape, 5)})')
+    else:
+        st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} reduced by {round(pct, 2)}% ({round(mape, 5)})')
+        
     ts1=ts1.append(ts2)
     ts1=np.exp(ts1)    
     
