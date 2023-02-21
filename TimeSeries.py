@@ -13,10 +13,8 @@ from pmdarima.arima import auto_arima
 from sklearn.metrics import mean_squared_error, mean_absolute_error
 import plotly.express as px
 import plotly.graph_objects as go
-import statsmodels.api as sm
 import math
 from datetime import datetime, timedelta
-
 import plotly.offline as po
 import main_functions as mfn
 
@@ -86,21 +84,19 @@ train_data, test_data = df_log[3:int(len(df_log)*0.9)], df_log[int(len(df_log)*0
 model_autoARIMA = auto_arima(train_data, start_p=0, start_q=0,
                       test='adf',       # use adftest to find optimal 'd'
                       max_p=3, max_q=3, # maximum p and q
-                      m=7,              # frequency of series
-                      d=1,           # let model determine 'd'
-                      seasonal=True,   # No Seasonality
-                      start_P=0, 
-                      D=1, 
+                      m=1,              # frequency of series
+                      d=None,           # let model determine 'd'
+                      seasonal=False,   # No Seasonality
+                      start_P=0,
+                      D=0,
                       trace=True,
-                      error_action='ignore',  
-                      suppress_warnings=True, 
+                      error_action='ignore',
+                      suppress_warnings=True,
                       stepwise=True)
 
-all=model_autoARIMA.get_params()
-p,q,d =all['order']
-P,Q,D,m=all['seasonal_order']
+p,q,d = model_autoARIMA.order
 
-model_ = sm.tsa.statespace.SARIMAX(train_data,order=(p,q,d),seasonal_order=(P,Q,D,m))
+model_ = ARIMA(train_data, order=(p,q,d))
 fitted = model_.fit()
 samples=len(test_data)
 fc=fitted.forecast(samples, alpha=0.05)
@@ -108,12 +104,12 @@ fc2=fitted.forecast(500, alpha=0.05)
 fc_series = pd.Series(fc, index=test_data.index)
 
 chart=pd.DataFrame(np.exp(test_data))
-chart["Predicted Close values"]=fc_series
+chart["Predicted Close values"]=np.exp(fc_series)
 
-mse_arima = round(mean_squared_error(np.exp(test_data), fc),4)
-mae_arima = round(mean_absolute_error(np.exp(test_data), fc),4)
-rmse_arima = round(math.sqrt(mean_squared_error(np.exp(test_data), fc)),4)
-mape1 = round(np.mean(np.abs(fc - np.exp(test_data))/np.abs(np.exp(test_data))),4)
+mse_arima = round(mean_squared_error(test_data, fc),4)
+mae_arima = round(mean_absolute_error(test_data, fc),4)
+rmse_arima = round(math.sqrt(mean_squared_error(test_data, fc)),4)
+mape1 = round(np.mean(np.abs(fc - test_data)/np.abs(test_data)),4)
 
 train_df=pd.DataFrame(train_data)
 train_df["ds"]=train_df.index
