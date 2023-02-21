@@ -27,10 +27,11 @@ def gen():
     return A_options, data
 
 with col1:
-    st.markdown("""<p align="center">
-    <img width="230" height="150" src="https://github.com/TelRich/Currency-Foreign-Exchange-Rates/raw/main/image/2023-02-09-09-35-08.png">
-    </p>""", unsafe_allow_html=True)
     st.markdown("""
+    <p align="center">
+    <img width="230" height="150" src="https://github.com/TelRich/Currency-Foreign-Exchange-Rates/raw/main/image/2023-02-09-09-35-08.png">
+    </p>
+    ***
     <font size="4"> **Select Currency Pair** </font>\n
     """, unsafe_allow_html=True)
     A_options, data=gen()
@@ -62,8 +63,8 @@ def test_stationarity(timeseries,cur_A,cur_B):
 
     chart=pd.DataFrame(timeseries,rolmean,rolstd)
     st.markdown("""
+    <font size="4"> **Results of Dickey-Fuller Test** </font>
     \b\n
-    <font size="4"> **Results of Dickey-Fuller Test** </font>\n
     """, unsafe_allow_html=True)
     adft = adfuller(timeseries,autolag='AIC')
     # output for dft will give us without defining what the values are.
@@ -161,6 +162,7 @@ with col2:
     ***
     <font size="4"> A HDSC Fall '22 Capstone Project - Team PyCaret </font>
     * <font size="4"> [**Dataset**](https://www.kaggle.com/datasets/dhruvildave/currency-exchange-rates) </font>
+    ***
     """, unsafe_allow_html=True)
 
     # visualization
