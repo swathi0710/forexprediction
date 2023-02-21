@@ -23,7 +23,7 @@ def gen():
     data = mfn.load_data()
     data["A"]=[str(a).split("/")[0] for a in data["slug"]]
     data["B"]=[str(a).split("/")[1] for a in data["slug"]]
-    A_options=data["A"].unique()
+    A_options=list(sorted(data["A"].unique()))
     return A_options, data
 
 with col1:
@@ -35,7 +35,7 @@ with col1:
     A_options, data=gen()
     cur_A = st.selectbox('Select first currency', A_options)
     A_data=data[data["A"]==cur_A]
-    B_options = A_data["B"].unique()
+    B_options = list(sorted(A_data["B"].unique()))
     cur_B = st.selectbox('Select second currency', B_options)
     
     Alist=[]
