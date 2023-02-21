@@ -106,10 +106,10 @@ fc_series = pd.Series(fc, index=test_data.index)
 chart=pd.DataFrame(np.exp(test_data))
 chart["Predicted Close values"]=np.exp(fc_series)
 
-mse_arima = mean_squared_error(test_data, fc)
-mae_arima = mean_absolute_error(test_data, fc)
-rmse_arima = math.sqrt(mean_squared_error(test_data, fc))
-mape1 = np.mean(np.abs(fc - test_data)/np.abs(test_data))
+mse_arima = round(mean_squared_error(test_data, fc),4)
+mae_arima = round(mean_absolute_error(test_data, fc),4)
+rmse_arima = round(math.sqrt(mean_squared_error(test_data, fc)),4)
+mape1 = round(np.mean(np.abs(fc - test_data)/np.abs(test_data)),4)
 
 train_df=pd.DataFrame(train_data)
 train_df["ds"]=train_df.index
@@ -127,10 +127,10 @@ fs.index=forecast.ds
 chart["Predicted Close values Prophet"]=np.exp(fs)
 test_data_ = np.where(test_data == 0, 1e-8, test_data)
 
-mse_prophet = mean_squared_error(test_data_, fs)
-mae_prophet = mean_absolute_error(test_data_, fs)
-rmse_prophet = math.sqrt(mean_squared_error(test_data_, fs))
-mape = np.mean(np.abs(fs - test_data_)/np.abs(test_data_))
+mse_prophet = round(mean_squared_error(test_data_, fs),4)
+mae_prophet = round(mean_absolute_error(test_data_, fs),4)
+rmse_prophet = round(math.sqrt(mean_squared_error(test_data_, fs)),4)
+mape = round(np.mean(np.abs(fs - test_data_)/np.abs(test_data_)),4)
 
 data = {
     "PROPHET":[mse_prophet, mae_prophet, rmse_prophet, mape],
@@ -151,7 +151,7 @@ with col2:
     st.markdown("""
     <center>
         <font size="7">
-            <span style='color:blue'><b>CURRENCY EXCHANGE RATE PREDICTION APP</b></span>
+            <span style='color:#00a5a7'><b>CURRENCY EXCHANGE RATE PREDICTION APP</b></span>
         </font>
     </center>
     \b
