@@ -203,7 +203,7 @@ with col2:
     diff = mape1-mape
     pct = (diff/mape1)*100
     if pct < 0:
-        st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} increased by {round(pct, 2)}% ({round(mape, 5)})')
+        st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} increased by {round(abs(pct), 2)}% ({round(mape, 5)})')
     else:
         st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} reduced by {round(pct, 2)}% ({round(mape, 5)})')
         
