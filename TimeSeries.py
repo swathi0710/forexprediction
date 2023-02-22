@@ -208,11 +208,11 @@ with col2:
          ts2=fc2
         
     diff = mape1-mape
-    pct = (diff/mape1)*100
-    if pct < 0:
-        st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} increased by {round(abs(pct), 2)}% ({round(mape, 5)})')
+    
+    if diff < 0:
+        print(f'The ARIMA model with {round(mape1, 5)} mape performs better than the Prophet model with ({round(mape, 5)}) mape by {round((diff/mape)*100, 2)}% ')
     else:
-        st.write(f'With Prophet Model, ARIMA error {round(mape1, 5)} reduced by {round(pct, 2)}% ({round(mape, 5)})')
+        print(f'The FB Prophet model with {round(mape, 5)} mape performs better than the Prophet model with ({round(mape1, 5)}) mape by {round((diff/mape1)*100, 2)}% ')
         
     ts1=ts1.append(ts2)
     ts1=np.exp(ts1)    
