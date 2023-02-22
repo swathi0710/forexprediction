@@ -210,9 +210,9 @@ with col2:
     diff = mape1-mape
     
     if diff < 0:
-        st.write(f'The ARIMA model with {round(mape1, 5)} mape performs better than the Prophet model with {round(mape, 5)} mape by {round((diff/mape)*100, 2)}% ')
+        st.write(f'The ARIMA model with {round(mape1, 5)} mape performs better than the Prophet model with {round(mape, 5)} mape by {round((diff/mape)*100, 2)}%.')
     else:
-        st.write(f'The FBProphet model with {round(mape, 5)} mape performs better than the Prophet model with {round(mape1, 5)} mape by {round((diff/mape1)*100, 2)}% ')
+        st.write(f'The FBProphet model with {round(mape, 5)} mape performs better than the Prophet model with {round(mape1, 5)} mape by {round((diff/mape1)*100, 2)}%. ')
         
     ts1=ts1.append(ts2)
     ts1=np.exp(ts1)    
