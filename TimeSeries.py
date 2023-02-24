@@ -163,6 +163,7 @@ with col2:
     <font size="4"> A HDSC Fall '22 Capstone Project - Team PyCaret </font>
     * <font size="4"> [**Dataset**](https://www.kaggle.com/datasets/dhruvildave/currency-exchange-rates) </font>
     * <font size="4"> [**GitHub**](https://github.com/TelRich/Currency-Foreign-Exchange-Rates) </font>
+    * <font size="4"> [**Medium**](https://medium.com/@rshm.jp07/currency-foreign-exchange-rate-prediction-4630a118de0c) </font>
     ***
     """, unsafe_allow_html=True)
 
