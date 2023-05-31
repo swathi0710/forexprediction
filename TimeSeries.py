@@ -53,7 +53,7 @@ with col1:
     A_B.index=pd.to_datetime(A_B.date)
 
     #upsample to weekly records using mean
-    weekly = A_B.resample('W', label='left',closed = 'left').mean()
+    weekly = A_B.resample('W', label='left',closed = 'left').mean(numeric_only=True)
     weekly["close"]=weekly["close"].ffill()
     df_close = weekly['close']
 
