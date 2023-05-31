@@ -218,7 +218,7 @@ with col2:
     else:
         st.write(f'The FBProphet model with {round(mape, 5)} mape performs better than the ARIMA model with {round(mape1, 5)} mape by {round((diff/mape1)*100, 2)}%. ')
         
-    ts1=ts1.concat(ts2)
+    ts1=pd.concat(ts1,ts2)
     ts1=np.exp(ts1)    
     
     st.markdown("""
