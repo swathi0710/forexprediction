@@ -33,7 +33,7 @@ with col1:
     </p>\b\n
     \b\n
     \b\n
-    <font size="4"> **Select 1 Currency Pair** </font>\n
+    <font size="4"> **Select Currency Pair** </font>\n
     """, unsafe_allow_html=True)
     A_options, data=gen()
     cur_A = st.selectbox('Select first currency', A_options)
