@@ -18,7 +18,7 @@ from datetime import datetime, timedelta
 import plotly.offline as po
 import main_functions as mfn
 
-@st.experimental_memo
+@st.cache
 def gen():
     data = mfn.load_data()
     data["A"]=[str(a).split("/")[0] for a in data["slug"]]
