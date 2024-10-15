@@ -19,7 +19,7 @@ st.set_page_config(layout="wide")
 col1, col2 = st.columns([1, 3], gap='medium')
 
 # Cache data loading and preprocessing
-@st.cache_data
+@st.cache
 def load_and_preprocess_data():
     data = mfn.load_data()
     data["A"] = [str(a).split("/")[0] for a in data["slug"]]
